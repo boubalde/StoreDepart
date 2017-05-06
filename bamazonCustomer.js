@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-
+var Table = require('cli-table');
 
 
 var connection = mysql.createConnection({
@@ -14,23 +14,22 @@ var connection = mysql.createConnection({
   password: "",
   database: "Bamazon"
 });
+var displayTable = function(){
 
-// connection.connect(function(err) {
-//   if (err) throw err;
-//   console.log("connected as id " + connection.threadId);
-// });
-//  connection.query("SELECT * FROM products", function(err, res) {
-//   if (err) throw err;
-//   console.log("item_id\t product_name\t departement_name\t price\t stock_quantity");
-//   console.log("-------\t------------\t   --------------\t-------\t. -------------")
-//         for (var i = 0; i < res.length; i++) {
-//             // console.log("Title          Artist          Genre");
-//             console.log(res[i].item_id + "\t" + res[i].product_name + "\t" 
-//               + res[i].department_name + "\t" + res[i].price + "\t" 
-//               + res[i].stock_quantity );
-//           }
-// });
-
+ connection.query("SELECT * FROM products", function(err, res) {
+  if (err) throw err;
+  console.log("item_id\t product_name\t department_name\t price\t stock_quantity");
+  console.log("-------\t------------\t   --------------\t-------\t. -------------")
+        for (var i = 0; i < res.length; i++) {
+            // console.log("Title          Artist          Genre");
+            console.log(res[i].item_id + "\t" + res[i].product_name + "\t" 
+              + res[i].department_name + "\t" + res[i].price + "\t" 
+              + res[i].stock_quantity );
+          }
+});
+}
+//displayTable();
+console.log("\n");
 	var order = function() {
 inquirer.prompt([
 
@@ -95,4 +94,4 @@ connection.query("SELECT * FROM products", function(err, res) {
 });
 };
 order();
-
+// displayTable();

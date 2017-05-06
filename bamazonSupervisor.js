@@ -1,5 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var Table = require('cli-table');
+
 
 
 
@@ -35,14 +37,21 @@ var departmentSales= function(){
 connection.query("SELECT * FROM department", function(err, res) {
   if (err) throw err;
   //console.log(res);
-  console.log("department_ID\t \t departement_name\t over_head_costs\t product_sales\t total_profit ");
-  console.log("-------\t------------\t   --------------\t ------------\t -------------\t ------------ ")
-        for (var i = 0; i < res.length; i++) {
-            var total_profit = res[i].total_sales - res[i].over_head_costs;
-            console.log(res[i].department_id + "\t" + res[i].department_name + "\t" 
-              + res[i].over_head_costs + "\t" + res[i].total_sales + "\t" 
-              + total_profit );
+ var table = new Table({ chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''} });
+ table.push(
+    ['department_ID', 'departement_name', 'over_head_costs', 'product_sales', 'total_profit']
+  
+);
+  
+for (var i = 0; i < res.length; i++) {
+    var total_profit = res[i].total_sales - res[i].over_head_costs;
+          table.push(
+    [res[i].department_id , res[i].department_name , res[i].over_head_costs , res[i].total_sales, total_profit ]
+   
+);
+            
           }
+          console.log(table.toString());
 });
   }
   startSupervisor();

@@ -1,7 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-
-
+var Table = require('cli-table');
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -16,10 +15,10 @@ var connection = mysql.createConnection({
 });
 
 var productSale = function(){
-connection.query("SELECT * FROM products", function(err, res) {
+
+ connection.query("SELECT * FROM products", function(err, res) {
   if (err) throw err;
-  //console.log(res);
-  console.log("item_id\t product_name\t departement_name\t price\t stock_quantity");
+  console.log("item_id\t product_name\t department_name\t price\t stock_quantity");
   console.log("-------\t------------\t   --------------\t-------\t. -------------")
         for (var i = 0; i < res.length; i++) {
             // console.log("Title          Artist          Genre");
@@ -116,8 +115,8 @@ inquirer.prompt([{
     }, function(err) {
       if (err) throw err;
       console.log("Your new product was created successfully!");
-      // re-prompt the user for if they want to bid or post
-      start();
+      // re-prompt the user for if they 
+      
     });
   });
 
@@ -136,19 +135,19 @@ var startManager = function() {
     
     if (answer.managerChoice === "View Products for Sale" ) {
      productSale();
-     startManager();
+     
     }
     else if (answer.managerChoice === "View Low Inventory"){
      lowInventory();
-     startManager();
+     
     }
     else if(answer.managerChoice === "Add to Inventory"){
     addInventory();
-    startManager();
+    
     }
     else if (answer.managerChoice === "Add New Product"){
         addProduct();
-        startManager();
+      
     }
 
   });
